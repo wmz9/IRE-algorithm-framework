@@ -1,7 +1,7 @@
 # IRE: A Deep Learning Theory-inspired Advanced Algorithm Framework
 
 
-This repository contains the official code of Implicit Regularization Enhancement (IRE) framework, introduced in the paper [Improving Generalization and Convergence by Enhancing Implicit Regularization (NeurIPS 2024)](https://arxiv.org/abs/2405.20763). Please cite the paper and star this repo if you find IRE useful. Thanks!
+This repository contains the official code of Implicit Regularization Enhancement (IRE) algorithm framework, introduced in the paper [Improving Generalization and Convergence by Enhancing Implicit Regularization (NeurIPS 2024)](https://arxiv.org/abs/2405.20763). Please cite the paper and star this repo if you find IRE useful. Thanks!
 
 ```
 @article{wang2024improving,
@@ -16,7 +16,7 @@ This repository contains the official code of Implicit Regularization Enhancemen
 ## Highlights
 
 **Generality**: 
-- **Broad optimizer compatibility**: IRE can be practically incorporated with *generic base optimizers*, such as `SGDIRE` for `SGD`, `SAMIRE` for [`SAM` (sharpness-aware minimization)](https://github.com/davda54/sam?tab=readme-ov-file), and `AdmWIRE` for [`Adam(W)`](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html).
+- **Broad optimizer compatibility**: IRE can be practically incorporated with *generic base optimizers*, such as `SGDIRE` for SGD, `SAMIRE` for [SAM (sharpness-aware minimization)](https://github.com/davda54/sam?tab=readme-ov-file), and `AdmWIRE` for [Adam(W)](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html).
 - **Wide applicability**: IRE is effective for both Large language model (LLM) pretraining and smaller over-paramterized networks, such as WideResNets.
 
 **Experimental Performance**: IRE achieves better generalization and faster optimization across a variety of tasks.
@@ -27,9 +27,8 @@ This repository contains the official code of Implicit Regularization Enhancemen
 
 **Theoretical Foundations**: The design of IRE draws from deep learning theory, and yielding theoretical benefits.
 
-- **Theory-Inspired Design**: IRE is designed to enhance the *implicit reguralization* of base optimizers, where implicit reguralization is a critical topic in deep learning theory;
-- **Theoretical Advantages**: While SAM exhibits superior sharpness regularization compared to SGD, we
-theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
+- **Theory-Inspired Design**: IRE is designed to enhance the [*implicit reguralization*](https://arxiv.org/abs/2208.12591) (a critical topic in deep learning theory) of base optimizers;
+- **Theoretical Advantages**: While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
 
 
 [](<img src="figures/figure1.png" style="zoom:40%;" />)
