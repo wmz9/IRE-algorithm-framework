@@ -12,8 +12,8 @@ from datetime import datetime
 import os
 
 import sys; sys.path.append("..")
-from sgd_new import SGDE
-from sam_new import SAM
+from sgdire import SGDIRE
+from samire import SAMIRE
 #from asam import ASAM
 
 import warnings
@@ -66,14 +66,14 @@ def train(args):
     elif args.base_optimizer =='AdamW':
         base_optimizer = torch.optim.AdamW
     if args.method == "SGD" :
-        optimizer = SGDE(model.parameters(), base_optimizer, rank=args.rank,  beta=args.beta_Fisher,  lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+        optimizer = SGDIRE(model.parameters(), base_optimizer, rank=args.rank,  beta=args.beta_Fisher,  lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
     elif args.method =='AdamW':
-        optimizer = SGDE(model.parameters(), base_optimizer, rank=args.rank,  beta=args.beta_Fisher,  lr=args.lr, weight_decay=args.weight_decay)
+        optimizer = SGDIRE(model.parameters(), base_optimizer, rank=args.rank,  beta=args.beta_Fisher,  lr=args.lr, weight_decay=args.weight_decay)
     elif args.method == "SAM":
         if args.base_optimizer=='SGD':
-            optimizer = SAM(model.parameters(), base_optimizer, rho=args.rho, rank=args.rank,  beta=args.beta_Fisher, 
+            optimizer = SAMIRE(model.parameters(), base_optimizer, rho=args.rho, rank=args.rank,  beta=args.beta_Fisher, 
                          lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
-        else: optimizer = SAM(model.parameters(), base_optimizer, rho=args.rho, rank=args.rank,  beta=args.beta_Fisher, 
+        else: optimizer = SAMIRE(model.parameters(), base_optimizer, rho=args.rho, rank=args.rank,  beta=args.beta_Fisher, 
                          lr=args.lr, weight_decay=args.weight_decay)
 
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs)
@@ -206,4 +206,4 @@ if __name__ == "__main__":
     train(args)
     f.close()
 
-# python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD --method=SGD --batch_size=128 --lr=10 --momentum=0 --epochs=100 --IRE_start_epoch=60 --rank=0.01 --prog=0 --gpu=0 --random_seed=11
+# python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD --method=SGD --batch_size=128 --lr=0.1 --momentum=0 --epochs=100 --IRE_start_epoch=60 --rank=0.01 --prog=0.0 --gpu=0 --random_seed=1
