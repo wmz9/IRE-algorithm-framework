@@ -47,11 +47,12 @@ This repository contains the official code of Implicit Regularization Enhancemen
 ## ViT on ImageNet
 
 ```
+cd CV/imagenet
 accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.2 --prog 2.0 --ire-epochs 100
 ```
 ## ResNet on CIFAR-10/100
 
 ```
-cd cifar_IRE
+cd CV/cifar
 python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD --method=SGD --batch_size=128 --lr=5 --momentum=0 --epochs=100 --IRE_start_epoch=60 --rank=0.01 --prog=0 --gpu=6 --random_seed=11
 ```
