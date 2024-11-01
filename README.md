@@ -38,17 +38,18 @@ This repository contains the official code of Implicit Regularization Enhancemen
 
 ## Llama
 
+[](<img src="figures/llama_web.pdf" style="zoom:40%;" />)
 
 
 ```
 
 ```
-## ViT
+## ViT on ImageNet
 
 ```
 accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.2 --prog 2.0 --ire-epochs 100
 ```
-## CIFAR
+## ResNet on CIFAR-10/100
 
 ```
 cd cifar_IRE
