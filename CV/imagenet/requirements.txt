@@ -1,0 +1,9 @@
+accelerate 
+torch 
+torchvision 
+wandb
+lion-pytorch
+timm
+# ipython 
+# flake8 
+# autopep8

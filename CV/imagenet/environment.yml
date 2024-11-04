@@ -1,0 +1,18 @@
+channels:
+- pytorch
+- nvidia
+- conda-forge
+dependencies:
+- accelerate 
+- huggingface_hub
+- pytorch 
+- torchvision 
+- wandb 
+- timm
+  # - ipython 
+  # - flake8 
+  # - autopep8
+- pip:
+  - lion-pytorch
+  
+  

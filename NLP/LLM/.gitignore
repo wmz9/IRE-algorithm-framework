@@ -1,0 +1,8 @@
+__pycache__/
+.vscode/
+wandb/
+wikitext-2/
+*.pt
+*.txt*
+*.sh
+*.yaml
