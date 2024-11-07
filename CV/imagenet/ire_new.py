@@ -45,18 +45,6 @@ class IRE_PARAMS(torch.optim.Optimizer):
                 # assert not self.state[p]['mask'].requires_grad
                 # self.state[p]['mask'].require_grad = False
 
-        # for group in self.param_groups:
-        #     for p in group['params']:
-        #         if p.grad is None:
-        #             continue
-        #         fisher_value_list = torch.square(p.grad.data).square().flatten()
-        #         keep_num = int(len(fisher_value_list) * rank_t)
-        #         _value, _ = torch.topk(fisher_value_list, keep_num, largest=True)
-        #         threshold = _value[-1]
-        #         self.state[p]['mask'] = p.grad.data <= threshold
-        #         self.state[p]['mask'].require_grad = False
-        #         # assert self.state[p]['mask'].max() <= 1.0 and self.state[p]['mask'].min() >= 0.0
-
 
     @torch.no_grad()
     def descent_step(self, use_ire=True):
@@ -65,14 +53,6 @@ class IRE_PARAMS(torch.optim.Optimizer):
     
     @torch.no_grad()
     def step(self, closure = None):
-        # if self.use_ire:
-        #     for group in self.param_groups:
-        #         for p in group["params"]:
-        #             if len(self.state[p]) == 0:
-        #                 self.state[p]['mask'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-        #                 self.state[p]['last_step_data'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-        #         group["lr"] = torch.cat([group["lr"] * (1 + self.state[p]['mask'].view(-1) * self.prog) for p in group["params"]])
-        # tensor LR support is disateraous in pytorch and hard
 
         last_step_data = {}
         for group in self.param_groups:

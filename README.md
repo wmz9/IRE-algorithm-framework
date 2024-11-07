@@ -38,7 +38,7 @@ This repository contains the official code of Implicit Regularization Enhancemen
 
 ## Llama
 
-[](<img src="figures/llama_web.pdf" style="zoom:40%;" />)
+<iframe src="figures/llama_web.pdf" width="600" height="400"></iframe>
 
 see NLP folder.
 
@@ -49,9 +49,7 @@ see NLP folder.
 
 ```
 cd CV/imagenet
-accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.4 --prog 2.0 --ire-epochs 100
 accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.2 --prog 2.0 --ire-epochs 100
-accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.1 --prog 0.0 --ire-epochs 100
 ```
 ## ResNet on CIFAR-10/100
 
