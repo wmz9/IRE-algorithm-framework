@@ -65,8 +65,8 @@ torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size
 ## ViT/ResNet on ImageNet
 
 <p align="center">
-<img src="figures/table2.png" width="300" />
-<img src="figures/table4.png" width="350" />
+<img src="figures/table2.png" width="310" />
+<img src="figures/table4.png" width="380" />
 </p>
 
 ```
