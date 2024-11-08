@@ -91,15 +91,15 @@ python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD
 ```
 
 # Theoretical Advantages
-**Effective dynamics: sharpness regularization.** The implicit regularization of SAM/SAMIRE can be modeled  using effective dynamics on the manifold of minimizers:
+**Effective dynamics: sharpness regularization.** The implicit regularization of SAM/SAMIRE can be modeled  using effective dynamics on the minimima manifold:
 <p align="center">
 <img src="figures/effective_dynamics.png" width="400" />
 </p>
 
 
-While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially:
+while SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM **substantially**:
 
 <p align="center">
 <img src="figures/manifold.png" width="250" />
-<img src="figures/theory.png" width="550" />
+<img src="figures/theory.png" width="590" />
 </p>
