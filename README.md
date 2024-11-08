@@ -36,7 +36,7 @@ IRE is designed to enhance the implicit reguralization of base optimizers.
 
 In practice, we can incorporate IRE with any base optimizers, such as SGD, SAM, and AdamW.
 <p align="center">
-<img src="figures/algorithm.png" width="600" />
+<img src="figures/algorithm.png" width="700" />
 </p>
 
 
@@ -78,7 +78,7 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="450" />
+<img src="figures/table1.png" width="520" />
 <img src="figures/table3.png" width="260" />
 </p>
 
