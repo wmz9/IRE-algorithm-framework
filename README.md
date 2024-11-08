@@ -100,6 +100,6 @@ python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD
 while SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM **substantially**:
 
 <p align="center">
-<img src="figures/manifold.png" width="250" />
-<img src="figures/theory.png" width="590" />
+<img src="figures/manifold.png" width="225" />
+<img src="figures/theory.png" width="575" />
 </p>
