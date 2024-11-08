@@ -31,12 +31,12 @@ This repository contains the official code of Implicit Regularization Enhancemen
 - **Theoretical Advantages**: While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
 
 
-![](Figure/algorithm.png)
+![](figures/algorithm.png)
 
 
 ## Transformer on wikitext-2
 
-[](<img src="figures/tf_wiki2.png" style="zoom:33%;" />)
+![](<img src="figures/tf_wiki2.png" style="zoom:33%;" />)
 
 ```
 cd NLP/small-scale
@@ -46,9 +46,9 @@ run TF_ire.ipynb
 
 ## LLaMA on wikitext-103/minipile/openwebtext
 
-[](<img src="figures/llama_wiki103.png" style="zoom:33%;" />)
-[](<img src="figures/llama_pile.png" style="zoom:33%;" />)
-[](<img src="figures/llama_web.png" style="zoom:33%;" />)
+![](<img src="figures/llama_wiki103.png" style="zoom:33%;" />)
+![](<img src="figures/llama_pile.png" style="zoom:33%;" />)
+![](<img src="figures/llama_web.png" style="zoom:33%;" />)
 
 ```
 cd NLP/LLM
@@ -59,8 +59,8 @@ torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size
 ```
 ## ViT/ResNet on ImageNet
 
-[](<img src="figures/table2.png" style="zoom:33%;" />)
-[](<img src="figures/table4.png" style="zoom:33%;" />)
+![](<img src="figures/table2.png" style="zoom:33%;" />)
+![](<img src="figures/table4.png" style="zoom:33%;" />)
 
 ```
 cd CV/imagenet
@@ -68,8 +68,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ```
 ## ResNet/ViT on CIFAR-10/100
 
-[](<img src="figures/table1.png" style="zoom:33%;" />)
-[](<img src="figures/table3.png" style="zoom:33%;" />)
+![](<img src="figures/table1.png" style="zoom:33%;" />)
+![](<img src="figures/table3.png" style="zoom:33%;" />)
 
 ```
 cd CV/cifar
