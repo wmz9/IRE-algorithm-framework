@@ -34,7 +34,7 @@ This repository contains the official code of Implicit Regularization Enhancemen
 IRE is designed to enhance the implicit reguralization of base optimizers.
 ![](figures/motivation.png)
 
-
+In practice, we can incorporate IRE with any base optimizers, such as SGD, SAM, and AdamW.
 ![](figures/algorithm.png)
 
 
@@ -76,8 +76,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="440" />
-<img src="figures/table3.png" width="220" />
+<img src="figures/table1.png" width="410" />
+<img src="figures/table3.png" width="240" />
 </p>
 
 ```
