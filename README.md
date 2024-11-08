@@ -50,9 +50,9 @@ run TF_ire.ipynb
 
 ## LLaMA on wikitext-103/minipile/openwebtext
 <p align="center">
-<img src="figures/llama_wiki103.png" width="200" />
-<img src="figures/llama_pile.png" width="200" />
-<img src="figures/llama_web.png" width="200" />
+<img src="figures/llama_wiki103.png" width="250" />
+<img src="figures/llama_pile.png" width="250" />
+<img src="figures/llama_web.png" width="250" />
 </p>
 
 ```
@@ -65,8 +65,8 @@ torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size
 ## ViT/ResNet on ImageNet
 
 <p align="center">
-<img src="figures/table2.png" width="200" />
-<img src="figures/table4.png" width="200" />
+<img src="figures/table2.png" width="300" />
+<img src="figures/table4.png" width="350" />
 </p>
 
 ```
@@ -76,8 +76,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="400" />
-<img src="figures/table3.png" width="400" />
+<img src="figures/table1.png" width="350" />
+<img src="figures/table3.png" width="200" />
 </p>
 
 ```
