@@ -21,7 +21,7 @@ This repository contains the official code of Implicit Regularization Enhancemen
 
 **Experimental Performance**: IRE achieves better generalization and faster optimization across a variety of tasks.
 
-- **Faster Optimization**: In LLM pretraining, IRE achieves a **2× speed-up** over AdamW for Llama models (from 60M to 229M parameters) on datasets including Wikitext-103, Minipile, and Openwebtext. 
+- **Faster Optimization**: In LLM pretraining, IRE achieves a **2× speed-up** over AdamW for LLaMA models (from 60M to 229M parameters) on datasets including Wikitext-103, Minipile, and Openwebtext. 
 
 - **Better Generalization**: For image classification, IRE consistently improves the generalization performance across a variety of benchmark datasets (CIFAR-10/100, ImageNet).
 
@@ -31,27 +31,45 @@ This repository contains the official code of Implicit Regularization Enhancemen
 - **Theoretical Advantages**: While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
 
 
-[](<img src="figures/figure1.png" style="zoom:40%;" />)
-[](<img src="figures/illustration.png" style="zoom:40%;" />)
-
 ![](Figure/algorithm.png)
 
-## Llama
 
-<iframe src="figures/llama_web.pdf" width="600" height="400"></iframe>
+## Transformer on wikitext-2
 
-see NLP folder.
+[](<img src="figures/tf_wiki2.png" style="zoom:33%;" />)
+
+```
+cd NLP/small-scale
+run TF_ire.ipynb
 
 ```
 
+## LLaMA on wikitext-103/minipile/openwebtext
+
+[](<img src="figures/llama_wiki103.png" style="zoom:33%;" />)
+[](<img src="figures/llama_pile.png" style="zoom:33%;" />)
+[](<img src="figures/llama_web.png" style="zoom:33%;" />)
+
 ```
-## ViT on ImageNet
+cd NLP/LLM
+torchrun --standalone --nproc_per_node=2 train_adamire_wiki103_Llama.py --batch_size=40 --grad_micro_steps=3 --total_bs=240 --max_lr=6e-4 --rank=0.4 --prog=3
+torchrun --standalone --nproc_per_node=2 train_adamire_pile_Llama.py --batch_size=15 --grad_micro_steps=10 --total_bs=300 --max_lr=6e-4 --rank=0.4 --prog=4.0
+torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
+
+```
+## ViT/ResNet on ImageNet
+
+[](<img src="figures/table2.png" style="zoom:33%;" />)
+[](<img src="figures/table4.png" style="zoom:33%;" />)
 
 ```
 cd CV/imagenet
 accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_processes 4 main.py -a taViT-S/16 -b 1024 --optim AdamW --epochs 300 --warmup-epochs 30 --project_dir logs_ire --project_name vit_imagenet --enable-ire --ire-rank 0.2 --prog 2.0 --ire-epochs 100
 ```
-## ResNet on CIFAR-10/100
+## ResNet/ViT on CIFAR-10/100
+
+[](<img src="figures/table1.png" style="zoom:33%;" />)
+[](<img src="figures/table3.png" style="zoom:33%;" />)
 
 ```
 cd CV/cifar

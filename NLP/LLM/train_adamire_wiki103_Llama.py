@@ -11,8 +11,8 @@ import torch
 import torch.nn.functional as F
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed import init_process_group, destroy_process_group
-from model_Llama import Llama
-from adam import AdamWIRE_PARAMS
+from modelling_llama_hand import Llama
+from ire import AdamWIRE_PARAMS
 
 # # I/O
 # out_dir = 'out'
@@ -343,7 +343,7 @@ if __name__=="__main__":
     parser.add_argument("--wandb_log", action='store_true', help="Use Wandb Log.")
     parser.add_argument("--wandb_project", default= 'llama_wiki', type=str, help="Wandb project.")
     parser.add_argument("--wandb_run_name", default='moving_4_01' , type=str, help="Wandb run name.")
-    parser.add_argument("--seed", default=41, type=int, help="Random seed.")
+    parser.add_argument("--seed", default=1, type=int, help="Random seed.")
     parser.add_argument("--batch_size", default=6, type=int, help="Batch size.")
     parser.add_argument("--grad_micro_steps", default=10, type=int, help="Gradient accumulation steps.")
     parser.add_argument("--total_bs", default=300, type=int, help="Total batch size.")
@@ -368,6 +368,4 @@ if __name__=="__main__":
     train(args)
 
 # # To run this .py (ddp)
-# torchrun --standalone --nproc_per_node=4 train_adamire_web_hand.py --batch_size=8 --grad_micro_steps=15 --total_bs=480 --rank=0.1 --prog=4.0 --prog_decay --max_lr=3e-4 --wandb_log --wandb_run_name=moving_4_01
-# # or
-# CUDA_VISIBLE_DEVICES=0,1 python3 -m torch.distributed.run --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --rank=0.1 --prog=4.0 --prog_decay --max_lr=3e-4 --wandb_log --wandb_run_name=moving_4_01
+# torchrun --standalone --nproc_per_node=2 train_adamire_wiki103_Llama.py --batch_size=40 --grad_micro_steps=3 --total_bs=240 --max_iters=50000 --max_lr=6e-4 --rank=0.4 --prog=3

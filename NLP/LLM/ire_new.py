@@ -1,6 +1,8 @@
 import torch
 import torch.nn.functional as F
 
+##### a simpler and faster version
+
 
 class IRE_PARAMS(torch.optim.Optimizer):
     def __init__(self, params, base_optimizer, rank, rank_increase, prog, **kwargs):

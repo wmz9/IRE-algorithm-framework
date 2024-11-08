@@ -11,8 +11,9 @@ import torch
 import torch.nn.functional as F
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed import init_process_group, destroy_process_group
-from adam import AdamWIRE_PARAMS
-from modelling_llama_new import LlamaConfig, LlamaForCausalLM, build_llama_models
+from ire_new import IRE_PARAMS
+import modelling_llama_new
+from modelling_llama_new import LlamaConfig, LlamaForCausalLM
 
 
 # # I/O
@@ -167,7 +168,6 @@ def train(args):
     weight_decay = args.weight_decay
     grad_clip = args.grad_clip
     mask_interval = args.mask_interval
-    beta = args.beta_Fisher
     rank = args.rank
     rank_increase = args.rank_increase
     print("rank_increase", rank_increase)
@@ -179,11 +179,7 @@ def train(args):
     save_interval = args.save_interval
     eval_iters = args.eval_iters
     resume_from_checkpoint = args.resume_from_checkpoint 
-    model_name = args.model_name
-    
-    if args.skip_init:
-        import modelling_llama_new
-        modelling_llama_new.skip_initialization = True
+    modelling_llama_new.skip_initialization = True
 
     d_input = 50304
     # d_output = d_input
@@ -193,11 +189,10 @@ def train(args):
     #                   norm_eps=1e-5, max_batch_size=32, max_seq_len=1024, device=device) 
     # gptconf = ModelArgs(**model_args)
     # model_args = dict(d_model=d_model, n_layers=num_layers, n_heads=num_heads, vocab_size=d_input, context_window=max_seq_length, dropout=dropout) 
-    # model_args = LlamaConfig(vocab_size=d_input, hidden_size=d_model, num_attention_heads=num_heads, attention_dropout=dropout, num_hidden_layers=num_layers, intermediate_size=d_ff, max_position_embeddings=max_seq_length)
+    model_args = LlamaConfig(vocab_size=d_input, hidden_size=d_model, num_attention_heads=num_heads, attention_dropout=dropout, num_hidden_layers=num_layers, intermediate_size=d_ff, max_position_embeddings=max_seq_length)
     # print(model_args)
 
-    # model = LlamaForCausalLM(model_args).to(device)
-    model = build_llama_models(model_name, d_input, max_seq_length, device)
+    model = LlamaForCausalLM(model_args).to(device)
     print(sum(p.numel() for p in model.parameters()))
 
     if resume_from_checkpoint:
@@ -207,14 +202,8 @@ def train(args):
     if ddp:
         model = DDP(model, device_ids=[ddp_local_rank])
 
-    base_optimizer = torch.optim.AdamW
-    optimizer = AdamWIRE_PARAMS(model.parameters(), base_optimizer, rank=rank, rank_increase=rank_increase, prog=prog, prog_decay=prog_decay, 
-                                beta=beta, lr=max_lr, betas=(beta1,beta2), weight_decay=weight_decay, eps=1e-16)
-    
-    track_name_file = None
-    if args.track_ratio and master_process:
-        optimizer.init_id_map(model.named_parameters())
-        track_name_file = open(f'{wandb_run_name}.txt', 'a')
+    base_optimizer = torch.optim.AdamW(model.parameters(),lr=max_lr, betas=(beta1,beta2), weight_decay=weight_decay, eps=1e-16)
+    optimizer = IRE_PARAMS(model.parameters(), base_optimizer, rank=rank, rank_increase=rank_increase, prog=prog, prog_decay=prog_decay)
         
     # init these up here, can override if init_from='resume' (i.e. from a checkpoint)
     iter_num = 0
@@ -245,7 +234,6 @@ def train(args):
         config.beta1 = beta1
         config.beta2 = beta2
         config.weight_decay = weight_decay
-        config.beta_Fisher = beta
         config.prog_decay = prog_decay    
         config.seed = args.seed
         config.log_interval = log_interval
@@ -287,9 +275,7 @@ def train(args):
                 # backward pass, with gradient scaling if training in fp16
             # step the optimizer and scaler if training in fp16
             #### iter_num > warmup_iters
-            if track_name_file is not None:
-                track_name_file.write(f"\n{iter_num} ")
-            optimizer.update_mask(iter_num - warmup_iters, max_iters - warmup_iters, track_name_file=track_name_file)
+            optimizer.update_mask(iter_num - warmup_iters, max_iters - warmup_iters)
             # flush the gradients as soon as we can, no need for this memory anymore
             optimizer.zero_grad(set_to_none=True)
 
@@ -314,7 +300,7 @@ def train(args):
         # gradient clip
         if grad_clip != 0.0:
             torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
-        optimizer.descent_step(lr, max_lr, iter_num > warmup_iters)
+        optimizer.descent_step(iter_num > warmup_iters)
         # scaler.update()
         # flush the gradients as soon as we can, no need for this memory anymore
         optimizer.zero_grad(set_to_none=True)
@@ -388,8 +374,7 @@ if __name__=="__main__":
     parser.add_argument("--wandb_log", action='store_true', help="Use Wandb Log.")
     parser.add_argument("--wandb_project", default= 'a800_llama_openwebtext', type=str, help="Wandb project.")
     parser.add_argument("--wandb_run_name", default='moving_4_01' , type=str, help="Wandb run name.")
-    parser.add_argument("--model_name", default="0.23B", type=str)
-    parser.add_argument("--seed", default=41, type=int, help="Random seed.")
+    parser.add_argument("--seed", default=1, type=int, help="Random seed.")
     parser.add_argument("--batch_size", default=6, type=int, help="Batch size.")
     parser.add_argument("--grad_micro_steps", default=10, type=int, help="Gradient accumulation steps.")
     parser.add_argument("--total_bs", default=480, type=int, help="Total batch size.")
@@ -405,19 +390,14 @@ if __name__=="__main__":
     parser.add_argument("--beta2", default=0.95, type=float, help="beta2 in AdamW.")
     parser.add_argument("--weight_decay", default=1e-1, type=float, help="weight decay in AdamW.")
     parser.add_argument("--grad_clip", default=1.0, type=float, help="grad clip in AdamW.")
-    parser.add_argument("--beta_Fisher", default=0.0, type=float, help="beta_Fisher in IRE.")
     parser.add_argument("--rank", default=0.1, type=float, help="rank in IRE.")
     parser.add_argument("--rank_increase", action='store_true', help="rank increase in IRE.")
     parser.add_argument("--prog", default=4.0, type=float, help="mu in IRE.")
     parser.add_argument("--prog_decay", action='store_true', help="prog decay in IRE.")
     parser.add_argument("--resume_from_checkpoint", type=str, default=None)
-    parser.add_argument("--skip_init", action="store_true")
-    parser.add_argument("--track_ratio", action="store_true")
     args = parser.parse_args()
     setup_seed(args.seed)
     train(args)
 
 # # To run this .py (ddp)
-# torchrun --standalone --nproc_per_node=8 train_adamire_web_Llama.py --batch_size=12 --grad_micro_steps=5 --total_bs=480 --rank=0.4 --prog=2.0  --max_lr=1.5e-4 --wandb_log --wandb_run_name=moving1.5_2_04
-# CUDA_VISIBLE_DEVICES=0,1 
-# python3 -m torch.distributed.run --standalone --nproc_per_node=8 train_adamire_web_Llama.py --batch_size=6 --grad_micro_steps=10 --total_bs=480 --rank=0.1 --prog=0.0 --max_lr=6e-4 --wandb_log --wandb_run_name=base6
+# torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
