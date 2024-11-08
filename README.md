@@ -76,8 +76,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="410" />
-<img src="figures/table3.png" width="240" />
+<img src="figures/table1.png" width="450" />
+<img src="figures/table3.png" width="260" />
 </p>
 
 ```
@@ -88,5 +88,5 @@ python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD
 # Theoretical Advantages
 While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
 <p align="center">
-<img src="figures/theory.png" width="500" />
+<img src="figures/theory.png" width="600" />
 </p>
