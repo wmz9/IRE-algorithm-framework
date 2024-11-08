@@ -40,7 +40,7 @@ IRE is designed to enhance the implicit reguralization of base optimizers.
 
 ## Transformer on wikitext-2
 <div style="text-align: center;">
-<img src="figures/tf_wiki2.png" style="zoom:6%;" />
+<img src="figures/tf_wiki2.png" width="200" />
 </div>
 
 ```
@@ -50,9 +50,9 @@ run TF_ire.ipynb
 
 ## LLaMA on wikitext-103/minipile/openwebtext
 <div style="text-align: center;">
-<img src="figures/llama_wiki103.png" style="zoom:6%;" />
-<img src="figures/llama_pile.png" style="zoom:6%;" />
-<img src="figures/llama_web.png" style="zoom:6%;" />
+<img src="figures/llama_wiki103.png" width="200" />
+<img src="figures/llama_pile.png" width="200" />
+<img src="figures/llama_web.png" width="200" />
 </div>
 
 ```
@@ -65,8 +65,8 @@ torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size
 ## ViT/ResNet on ImageNet
 
 <div style="text-align: center;">
-<img src="figures/table2.png" style="zoom:22%;" />
-<img src="figures/table4.png" style="zoom:22%;" />
+<img src="figures/table2.png" width="200" />
+<img src="figures/table4.png" width="200" />
 </div>
 
 ```
@@ -76,8 +76,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <div style="text-align: center;">
-<img src="figures/table1.png" style="zoom:22%;" />
-<img src="figures/table3.png" style="zoom:22%;" />
+<img src="figures/table1.png" width="200" />
+<img src="figures/table3.png" width="200" />
 </div>
 
 ```
@@ -88,5 +88,5 @@ python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD
 # Theoretical Advantages
 While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially.
 <div style="text-align: center;">
-<img src="figures/theory.png" style="zoom:22%;" />
+<img src="figures/theory.png" width="200" />
 </div>
