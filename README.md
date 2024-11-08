@@ -35,12 +35,14 @@ IRE is designed to enhance the implicit reguralization of base optimizers.
 ![](figures/motivation.png)
 
 In practice, we can incorporate IRE with any base optimizers, such as SGD, SAM, and AdamW.
-![](figures/algorithm.png)
+<p align="center">
+<img src="figures/algorithm.png" width="600" />
+</p>
 
 
 ## Transformer on wikitext-2
 <p align="center">
-<img src="figures/tf_wiki2.png" width="300" />
+<img src="figures/tf_wiki2.png" width="400" />
 </p>
 
 ```
@@ -50,9 +52,9 @@ run TF_ire.ipynb
 
 ## LLaMA on wikitext-103/minipile/openwebtext
 <p align="center">
-<img src="figures/llama_wiki103.png" width="300" />
-<img src="figures/llama_pile.png" width="300" />
-<img src="figures/llama_web.png" width="300" />
+<img src="figures/llama_wiki103.png" width="400" />
+<img src="figures/llama_pile.png" width="400" />
+<img src="figures/llama_web.png" width="400" />
 </p>
 
 ```
