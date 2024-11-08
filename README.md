@@ -91,7 +91,7 @@ python cifar_IRE_same.py --dataset=CIFAR10 --model=resnet56 --base_optimizer=SGD
 ```
 
 # Theoretical Advantages
-**Effective dynamics: sharpness regularization.** The implicit regularization of SAM/SAMIRE can be modeled  using effective dynamics. When $\boldsymbol{\theta}_t$ are close the manifold of minimizers $\mathcal{M}$ and let $\boldsymbol{z}_t:=\Phi(\boldsymbol{\theta}_t)\in\mathcal{M}$.
+**Effective dynamics: sharpness regularization.** The implicit regularization of SAM/SAMIRE can be modeled  using effective dynamics. When $\bm{\theta}_t$ are close the manifold of minimizers $\mathcal{M}$ and let $\bm{z}_t:=\Phi(\boldsymbol{\theta}_t)\in\mathcal{M}$.
 Then, the effective dynamics $\{\boldsymbol{z}_{t}\}$ reveal how SAM/SAMIRE explore the manifold of minimizers $\mathcal{M}$: 
 $$\mathbb{E}\left[\boldsymbol{z}_{t+1}\right]=\boldsymbol{z}_t -\eta_{\rm eff} \nabla_{\mathcal{M}} \mathrm{Tr}\left[\nabla^2 \mathcal{L}(\boldsymbol{z}_t)/2\right]+o(\eta_{\rm eff}),$$
 which minimizes the trace of Hessian on $\mathcal{M}$ with effective lr $\eta_{\rm eff}$. 
@@ -99,6 +99,6 @@ which minimizes the trace of Hessian on $\mathcal{M}$ with effective lr $\eta_{\
 While SAM exhibits superior sharpness regularization compared to SGD, we theoretically demonstrates that IRE can further accelerate the convergence towards flatter minima than SAM substantially:
 
 <p align="center">
-<img src="figures/manifold.png" width="200" />
-<img src="figures/theory.png" width="600" />
+<img src="figures/manifold.png" width="250" />
+<img src="figures/theory.png" width="550" />
 </p>
