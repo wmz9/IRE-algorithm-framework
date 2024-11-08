@@ -32,7 +32,10 @@ This repository contains the official code of Implicit Regularization Enhancemen
 
 ## Motivation and Algorithm
 IRE is designed to enhance the implicit reguralization of base optimizers.
-![](figures/motivation.png)
+<!-- ![](figures/motivation.png) -->
+<p align="center">
+<img src="figures/motivation.png" width="800" />
+</p>
 
 In practice, we can incorporate IRE with any base optimizers, such as SGD, SAM, and AdamW.
 <p align="center">
@@ -67,8 +70,8 @@ torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size
 ## ViT/ResNet on ImageNet
 
 <p align="center">
-<img src="figures/table2.png" width="310" />
-<img src="figures/table4.png" width="380" />
+<img src="figures/table2.png" width="360" />
+<img src="figures/table4.png" width="440" />
 </p>
 
 ```
@@ -78,8 +81,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="520" />
-<img src="figures/table3.png" width="260" />
+<img src="figures/table1.png" width="500" />
+<img src="figures/table3.png" width="300" />
 </p>
 
 ```
