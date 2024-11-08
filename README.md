@@ -76,8 +76,8 @@ accelerate launch --config_file config_file_compile_nomix_multi.yaml --num_proce
 ## ResNet/ViT on CIFAR-10/100
 
 <p align="center">
-<img src="figures/table1.png" width="400" />
-<img src="figures/table3.png" width="250" />
+<img src="figures/table1.png" width="440" />
+<img src="figures/table3.png" width="220" />
 </p>
 
 ```
