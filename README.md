@@ -40,7 +40,7 @@ IRE is designed to enhance the implicit reguralization of base optimizers.
 
 ## Transformer on wikitext-2
 <p align="center">
-<img src="figures/tf_wiki2.png" width="250" />
+<img src="figures/tf_wiki2.png" width="300" />
 </p>
 
 ```
@@ -50,9 +50,9 @@ run TF_ire.ipynb
 
 ## LLaMA on wikitext-103/minipile/openwebtext
 <p align="center">
-<img src="figures/llama_wiki103.png" width="220" />
-<img src="figures/llama_pile.png" width="220" />
-<img src="figures/llama_web.png" width="220" />
+<img src="figures/llama_wiki103.png" width="300" />
+<img src="figures/llama_pile.png" width="300" />
+<img src="figures/llama_web.png" width="300" />
 </p>
 
 ```
