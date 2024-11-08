@@ -37,7 +37,7 @@ IRE is designed to enhance the implicit reguralization of base optimizers.
 <img src="figures/motivation.png" width="800" />
 </p>
 
-In practice, we can incorporate IRE with any base optimizers, such as SGD, SAM, and AdamW.
+In practice, we can incorporate IRE with any base optimizers, such as `SGDIRE` for SGD, `SAMIRE` for SAM, and `AdmWIRE` for Adam(W):
 <p align="center">
 <img src="figures/algorithm.png" width="750" />
 </p>
