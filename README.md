@@ -62,9 +62,9 @@ run TF_ire.ipynb
 
 ```
 cd NLP/LLM
-torchrun --standalone --nproc_per_node=2 train_adamire_wiki103_Llama.py --batch_size=40 --grad_micro_steps=3 --total_bs=240 --max_lr=6e-4 --rank=0.4 --prog=3
-torchrun --standalone --nproc_per_node=2 train_adamire_pile_Llama.py --batch_size=15 --grad_micro_steps=10 --total_bs=300 --max_lr=6e-4 --rank=0.4 --prog=4.0
-torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
+torchrun --standalone --nproc_per_node=2 train_admire_wiki103_Llama.py --batch_size=40 --grad_micro_steps=3 --total_bs=240 --max_lr=6e-4 --rank=0.4 --prog=3.0
+torchrun --standalone --nproc_per_node=2 train_admire_pile_Llama.py --batch_size=15 --grad_micro_steps=10 --total_bs=300 --max_lr=6e-4 --rank=0.4 --prog=4.0
+torchrun --standalone --nproc_per_node=2 train_admire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
 
 ```
 ## ViT/ResNet on ImageNet

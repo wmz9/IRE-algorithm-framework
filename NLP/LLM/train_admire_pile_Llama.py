@@ -19,8 +19,8 @@ from ire import AdamWIRE_PARAMS
 # always_save_checkpoint = True # if True, always save a checkpoint after each eval
 
 # data
-dataset = 'wikitext-103'
-block_size = 150
+dataset = 'minipile'
+block_size = 512
 # poor man's data loader
 data_dir = os.path.join('/mnt/share/data', dataset)
 train_data = np.memmap(os.path.join(data_dir, 'train.bin'), dtype=np.uint16, mode='r')
@@ -43,9 +43,9 @@ print("defaulting to vocab_size to 50304")
 
 # model
 max_seq_length = block_size
-d_model = 410  ## fixed due to d_{kv}
-num_heads = 10  ## fixed due to d_{kv}
-num_layers = 16
+d_model = 768  ## fixed due to d_{kv}
+num_heads = 12  ## fixed due to d_{kv}
+num_layers = 6
 d_ff = d_model * 4
 dropout = 0.0
 
@@ -67,7 +67,7 @@ dtype = 'bfloat16' # 'float32', 'bfloat16'
 
 # # various inits, derived attributes, I/O setup
 ddp = int(os.environ.get('RANK', -1)) != -1 # is this a ddp run?
-scaler = torch.amp.GradScaler()
+scaler = torch.cuda.amp.GradScaler()
 
 
 if ddp:
@@ -341,7 +341,7 @@ if __name__=="__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--wandb_log", action='store_true', help="Use Wandb Log.")
-    parser.add_argument("--wandb_project", default= 'llama_wiki', type=str, help="Wandb project.")
+    parser.add_argument("--wandb_project", default= 'llama_pile', type=str, help="Wandb project.")
     parser.add_argument("--wandb_run_name", default='moving_4_01' , type=str, help="Wandb run name.")
     parser.add_argument("--seed", default=1, type=int, help="Random seed.")
     parser.add_argument("--batch_size", default=6, type=int, help="Batch size.")
@@ -352,8 +352,8 @@ if __name__=="__main__":
     parser.add_argument("--eval_interval", default=200, type=int, help="..")
     parser.add_argument("--eval_iters", default=100, type=int, help="...")
     parser.add_argument("--max_lr", default=3e-4, type=float, help="max lr in AdamW.")
-    parser.add_argument("--max_iters", default=50000, type=int, help="max iterations.")
-    parser.add_argument("--warmup_iters", default=500, type=int, help="warmup iterations.")
+    parser.add_argument("--max_iters", default=30000, type=int, help="max iterations.")
+    parser.add_argument("--warmup_iters", default=300, type=int, help="warmup iterations.")
     parser.add_argument("--beta1", default=0.9, type=float, help="beta1 in AdamW.")
     parser.add_argument("--beta2", default=0.95, type=float, help="beta2 in AdamW.")
     parser.add_argument("--weight_decay", default=1e-1, type=float, help="weight decay in AdamW.")
@@ -367,5 +367,6 @@ if __name__=="__main__":
     setup_seed(args.seed)
     train(args)
 
+
 # # To run this .py (ddp)
-# torchrun --standalone --nproc_per_node=2 train_adamire_wiki103_Llama.py --batch_size=40 --grad_micro_steps=3 --total_bs=240 --max_iters=50000 --max_lr=6e-4 --rank=0.4 --prog=3
+# torchrun --standalone --nproc_per_node=2 train_admire_pile_Llama.py --batch_size=15 --grad_micro_steps=10 --total_bs=300 --max_lr=6e-4 --rank=0.4 --prog=4.0

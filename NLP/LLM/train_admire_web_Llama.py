@@ -400,4 +400,4 @@ if __name__=="__main__":
     train(args)
 
 # # To run this .py (ddp)
-# torchrun --standalone --nproc_per_node=2 train_adamire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
+# torchrun --standalone --nproc_per_node=2 train_admire_web_Llama.py --batch_size=16 --grad_micro_steps=15 --total_bs=480 --max_lr=6e-4 --rank=0.4 --prog=4.0
